@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import AddAgendaModal from "../components/AddAgendaModal";
 
 export async function loader() {
   const response = await fetch('https://playground.4geeks.com/contact/agendas?offset=0&limit=100')
@@ -51,41 +52,44 @@ export default function Home() {
   return (
     <>
       <Navbar fullMode={false} />
+      <AddAgendaModal />
       <h1 className="text-center mb-4">Agendas</h1>
-      <div className="container col-md-6 col-lg-3 d-grid m-auto">
-        {data.agendas.map((e, i) => (
-          <div className="btn-group mb-3" key={i}>
-            <Link className={`col-10 btn btn-${theme} fs-3`} to={`/agenda/${e.slug}`}>{e.slug}</Link>
-            {confirmSlug === e.slug ? (
-              <>
+      <div className="container">
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row g-3">
+          {data.agendas.map((e, i) => (
+            <div className="col btn-group" key={i}>
+              <Link className={`col-10 btn btn-${theme} fs-3`} to={`/agenda/${e.slug}`}>{e.slug}</Link>
+              {confirmSlug === e.slug ? (
+                <>
+                  <button
+                    className={`col-1 p-0 btn btn-${theme} text-success`}
+                    onClick={() => {
+                      fetcher.submit(
+                        { _action: 'delete', slug: e.slug },
+                        { method: 'post' }
+                      )
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faCheck} />
+                  </button>
+                  <button
+                    className={`col-1 p-0 btn btn-${theme} text-danger`}
+                    onClick={() => setConfirmSlug(null)}
+                  >
+                    <FontAwesomeIcon icon={faX} />
+                  </button>
+                </>
+              ) : (
                 <button
-                  className={`col-1 p-0 btn btn-${theme} text-success`}
-                  onClick={() => {
-                    fetcher.submit(
-                      { _action: 'delete', slug: e.slug },
-                      { method: 'post' }
-                    )
-                  }}
+                  className={`col-2 p-0 btn btn-${theme} text-danger`}
+                  onClick={() => setConfirmSlug(e.slug)}
                 >
-                  <FontAwesomeIcon icon={faCheck} />
+                  <FontAwesomeIcon icon={faTrashAlt} className="fs-5" />
                 </button>
-                <button
-                  className={`col-1 p-0 btn btn-${theme} text-danger`}
-                  onClick={() => setConfirmSlug(null)}
-                >
-                  <FontAwesomeIcon icon={faX} />
-                </button>
-              </>
-            ) : (
-              <button
-                className={`col-2 p-0 btn btn-${theme} text-danger`}
-                onClick={() => setConfirmSlug(e.slug)}
-              >
-                <FontAwesomeIcon icon={faTrashAlt} className="fs-5" />
-              </button>
-            )}
-          </div>
-        ))}
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   )

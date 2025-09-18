@@ -11,7 +11,7 @@ export default function Navbar({ fullMode, routeToForm }) {
   return (
     <nav className={`navbar bg-${theme} px-5 mb-5 sticky-top`}>
       <div className='container-fluid'>
-        {!fullMode && <AddAgendaModal />}
+        {!fullMode && <button className='btn btn-success' data-bs-toggle="modal" data-bs-target="#addAgenda">Add Ageda</button>}
         {fullMode && (
           <>
             <Link to={'/'} className='btn btn-outline-secondary me-3'>

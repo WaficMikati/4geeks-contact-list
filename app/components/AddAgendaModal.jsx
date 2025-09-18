@@ -1,11 +1,9 @@
 import { Form } from "react-router";
 
-
-
 export default function AddAgendaModal() {
   return (
     <>
-      <button className='btn btn-success' data-bs-toggle="modal" data-bs-target="#addAgenda">Add Ageda</button>
+
 
       <div className="modal fade" id="addAgenda" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
