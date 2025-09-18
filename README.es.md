@@ -4,4 +4,4 @@ Uso completo de la API de contactos de 4Geeks con React Router v7, Bootstrap v5.
 
 [Véalo en vivo](https://4geeks-contact-list.vercel.app/)
 
-![Vista previa](src/public/preview.png)
+![Vista previa](public/preview.png)
