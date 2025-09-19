@@ -62,7 +62,7 @@ export default function Home() {
               {confirmSlug === e.slug ? (
                 <>
                   <button
-                    className={`col-1 p-0 btn btn-${theme} text-success`}
+                    className={`col-2 p-0 btn btn-${theme} text-success`}
                     onClick={() => {
                       fetcher.submit(
                         { _action: 'delete', slug: e.slug },
@@ -73,7 +73,7 @@ export default function Home() {
                     <FontAwesomeIcon icon={faCheck} />
                   </button>
                   <button
-                    className={`col-1 p-0 btn btn-${theme} text-danger`}
+                    className={`col-2 p-0 btn btn-${theme} text-danger`}
                     onClick={() => setConfirmSlug(null)}
                   >
                     <FontAwesomeIcon icon={faX} />
@@ -81,7 +81,7 @@ export default function Home() {
                 </>
               ) : (
                 <button
-                  className={`col-2 p-0 btn btn-${theme} text-danger`}
+                  className={`col-4 p-0 btn btn-${theme} text-danger`}
                   onClick={() => setConfirmSlug(e.slug)}
                 >
                   <FontAwesomeIcon icon={faTrashAlt} className="fs-5" />

@@ -1,8 +1,6 @@
 import { useLoaderData } from "react-router"
-import { useState } from "react"
 import Navbar from "../components/Navbar"
 import DisplayCard from "../components/DisplayCard"
-import EditorCard from "../components/EditorCard"
 
 export async function loader({ params }) {
   const { slug } = params
@@ -22,15 +20,21 @@ export async function action({ request, params }) {
       })
       return null
     case 'PUT':
-      await fetch(`https://playground.4geeks.com/contact/agendas/${params.slug}/contacts/${formData.get('id')}`, {
+      const id = formData.get('id')
+      const data = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        address: formData.get('address')
+      }
+      console.log('id: ', id)
+      console.log(data);
+
+
+      await fetch(`https://playground.4geeks.com/contact/agendas/${params.slug}/contacts/${id}`, {
         method: 'PUT',
-        headers: { 'content-type': 'application/json', acctept: 'application/json' },
-        body: JSON.stringify({
-          'name': formData.get('name'),
-          'phone': formData.get('phone'),
-          'email': formData.get('email'),
-          'address': formData.get('address')
-        })
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify(data)
       })
       return null
   }
@@ -38,11 +42,6 @@ export async function action({ request, params }) {
 
 export default function Contact() {
   const data = useLoaderData()
-  const [editMode, setEditMode] = useState(false)
-
-  function toggleEditMode() {
-    setEditMode(!editMode)
-  }
 
   return (
     <>
@@ -50,9 +49,7 @@ export default function Contact() {
       <h1 className="text-center mb-5">{data.slug}</h1>
       {data.contacts && data.contacts.map((e, i) => (
         <div key={i}>
-          {editMode
-            ? <EditorCard contact={e} edit={toggleEditMode} />
-            : <DisplayCard contact={e} edit={toggleEditMode} />}
+          <DisplayCard contact={e} />
         </div>
       ))}
     </>
